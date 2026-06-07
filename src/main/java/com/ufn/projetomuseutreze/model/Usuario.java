@@ -33,4 +33,5 @@ public class Usuario {
     @Column(name = "data_cadastro", updatable = false)
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
+    private Boolean ativo = true;
 }

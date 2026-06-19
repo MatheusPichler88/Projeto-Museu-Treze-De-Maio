@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "usuario")
 @NoArgsConstructor
@@ -27,11 +25,7 @@ public class Usuario {
     private String nome;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('ADMINISTRADOR', 'FUNCIONARIO', 'VISITANTE')")
     private PerfilUsuario perfil = PerfilUsuario.VISITANTE;
-
-    @Column(name = "data_cadastro", updatable = false)
-    private LocalDateTime dataCadastro = LocalDateTime.now();
 
     private Boolean ativo = true;
 }

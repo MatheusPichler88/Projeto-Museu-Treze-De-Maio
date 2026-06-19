@@ -14,9 +14,9 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    //Listar usúario ativos
+    //Listar usúarios
     public List<Usuario> listarTodos(){
-        return usuarioRepository.findByAtivoTrue();
+        return usuarioRepository.findAll();
     }
     //Buscar usúario por ID
     public Usuario buscarPorId(Long id){

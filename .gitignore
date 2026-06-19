@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+#Configuração de senha do servidor
+.env

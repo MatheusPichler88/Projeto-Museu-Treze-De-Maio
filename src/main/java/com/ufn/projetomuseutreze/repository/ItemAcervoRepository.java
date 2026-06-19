@@ -1,0 +1,13 @@
+package com.ufn.projetomuseutreze.repository;
+
+import com.ufn.projetomuseutreze.model.ItemAcervo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface ItemAcervoRepository extends JpaRepository<ItemAcervo, Long> {
+
+    Optional<ItemAcervo> findByCodigoPatrimonio(String codigoPatrimonio);
+}

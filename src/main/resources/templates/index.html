@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museu Digital - Início</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <img th:src="@{/images/logo.png}" alt="Logo do Museu" class="logo">
+        </div>
+        <nav class="nav-menu">
+            <a th:href="@{/}" class="nav-link active">Início</a>
+            <a th:href="@{/acervo}" class="nav-link">Acervo</a>
+            <a th:href="@{/login}" class="btn-login-nav">Entrar</a>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Descubra a História no Nosso Acervo Digital</h1>
+            <p>Explore peças únicas, documentos históricos e relíquias preservadas.</p>
+            <div class="hero-buttons">
+                <a th:href="@{/acervo}" class="btn-primary">Ver Acervo</a>
+                <a th:href="@{/cadastro}" class="btn-secondary">Cadastre-se</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 Sistema de Gestão de Museu. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

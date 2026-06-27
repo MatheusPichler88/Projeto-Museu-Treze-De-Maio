@@ -1,6 +1,7 @@
 package com.ufn.projetomuseutreze.service;
 
 import com.ufn.projetomuseutreze.model.ItemAcervo;
+import com.ufn.projetomuseutreze.model.TipoItem;
 import com.ufn.projetomuseutreze.repository.ItemAcervoRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +32,24 @@ public class ItemAcervoService {
     }
 
     public ItemAcervo salvar(ItemAcervo item) {
+        if (item.getId() == null) {
+            item.setCodigoPatrimonio("TEMP");
+            item = itemAcervoRepository.save(item);
+            String codigo = String.format("%s%03d", item.getTipoItem().getPrefixo(), item.getId());
+            item.setCodigoPatrimonio(codigo);
+        }
         return itemAcervoRepository.save(item);
     }
 
     public void ativarDesativar(Long id) {
         ItemAcervo item = buscarPorId(id);
-        item.setAtivo(false);
+        item.setAtivo(!item.getAtivo());
         itemAcervoRepository.save(item);
+    }
+
+    private String gerarCodigoPatrimonio(TipoItem tipoItem) {
+        long total = itemAcervoRepository.countByTipoItem(tipoItem);
+        long proximoNumero = total + 1;
+        return String.format("%s%03d", tipoItem.getPrefixo(), proximoNumero);
     }
 }

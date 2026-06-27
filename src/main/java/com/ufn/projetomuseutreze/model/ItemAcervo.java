@@ -14,6 +14,10 @@ public class ItemAcervo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_item", nullable = false)
+    private TipoItem tipoItem;
+
     @Column(name = "codigo_patrimonio", unique = true, nullable = false, length = 50)
     private String codigoPatrimonio;
 

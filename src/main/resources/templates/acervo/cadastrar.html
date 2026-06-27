@@ -25,27 +25,41 @@
 
                 <div class="form-row form-row-2">
                     <div class="form-group" style="margin-bottom:0;">
-                        <label class="form-label">Código do Patrimônio <span class="required">*</span></label>
-                        <input type="text" class="form-control" th:field="*{codigoPatrimonio}" placeholder="Ex: PAT-001" required>
+                        <label class="form-label">Tipo do Item <span class="required">*</span></label>
+                        <select class="form-control" th:field="*{tipoItem}" required th:disabled="${item.id != null}">
+                            <option value="">Selecione o tipo...</option>
+                            <option value="LIVRO">Livro</option>
+                            <option value="REVISTA">Revista</option>
+                            <option value="OUTRO">Outro Item</option>
+                        </select>
+                        <input type="hidden" th:if="${item.id != null}" th:field="*{tipoItem}">
                     </div>
                     <div class="form-group" style="margin-bottom:0;">
-                        <label class="form-label">Título <span class="required">*</span></label>
-                        <input type="text" class="form-control" th:field="*{titulo}" placeholder="Título do Item" required>
+                        <label class="form-label">Código do Patrimônio</label>
+                        <input type="text" class="form-control"
+                               th:value="${item.id != null} ? ${item.codigoPatrimonio} : 'Gerado automaticamente ao salvar'"
+                               disabled
+                               style="background-color: #f0f0f0; color: #666; cursor: not-allowed;">
+                        <input type="hidden" th:if="${item.id != null}" th:field="*{codigoPatrimonio}">
                     </div>
                 </div>
 
                 <div class="form-row form-row-2">
                     <div class="form-group" style="margin-bottom:0;">
-                        <label class="form-label">Autor / Criador</label>
-                        <input type="text" class="form-control" th:field="*{autorCriador}" placeholder="Nome do Autor">
+                        <label class="form-label">Título <span class="required">*</span></label>
+                        <input type="text" class="form-control" th:field="*{titulo}" placeholder="Título do Item" required>
                     </div>
                     <div class="form-group" style="margin-bottom:0;">
-                        <label class="form-label">Editora / Origem</label>
-                        <input type="text" class="form-control" th:field="*{editoraOrigem}" placeholder="Origem do Item">
+                        <label class="form-label">Autor / Criador</label>
+                        <input type="text" class="form-control" th:field="*{autorCriador}" placeholder="Nome do Autor">
                     </div>
                 </div>
 
                 <div class="form-row form-row-3">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Editora / Origem</label>
+                        <input type="text" class="form-control" th:field="*{editoraOrigem}" placeholder="Origem do Item">
+                    </div>
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label">Ano de Registro</label>
                         <input type="number" class="form-control" th:field="*{anoRegistro}" placeholder="2025">
@@ -54,6 +68,9 @@
                         <label class="form-label">Quantidade</label>
                         <input type="number" class="form-control" th:field="*{quantidade}" min="1">
                     </div>
+                </div>
+
+                <div class="form-row form-row-2">
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label">Categoria <span class="required">*</span></label>
                         <select class="form-control" th:field="*{categoria.id}" required>
@@ -64,9 +81,6 @@
                             </option>
                         </select>
                     </div>
-                </div>
-
-                <div class="form-row form-row-2">
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label">Estado de Conservação</label>
                         <select class="form-control" th:field="*{estadoConservacao}">
@@ -77,10 +91,11 @@
                             <option value="EM_RESTAURO">Em Restauro</option>
                         </select>
                     </div>
-                    <div class="form-group" style="margin-bottom:0;">
-                        <label class="form-label">Localização Física</label>
-                        <input type="text" class="form-control" th:field="*{localizacaoFisica}" placeholder="Sala / Estante / Prateleira">
-                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Localização Física</label>
+                    <input type="text" class="form-control" th:field="*{localizacaoFisica}" placeholder="Sala / Estante / Prateleira">
                 </div>
 
                 <div class="form-group">

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários — Museu Treze de Maio</title>
+    <link rel="stylesheet" th:href="@{/css/museu.css}" />
+</head>
+<body>
+
+<div class="layout-wrapper">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('usuarios')}"></div>
+
+    <main class="main-content">
+
+        <div class="page-header" style="display:flex; align-items:flex-start; justify-content:space-between; gap:1rem;">
+            <div>
+                <h1 class="page-title">Usuários</h1>
+                <p class="page-subtitle">Consulte e gerencie os usuários do sistema</p>
+            </div>
+            <a th:href="@{/usuarios/novo}" class="btn btn-primary" style="width:auto;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Novo Usuário
+            </a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(usuarios)}" class="card">
+            <div class="card-body empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                </svg>
+                <p>Nenhum usuário cadastrado.</p>
+            </div>
+        </div>
+
+        <div th:each="usuario : ${usuarios}" class="user-list-card">
+            <div class="user-info">
+                <div class="user-avatar-lg" th:text="${#strings.toUpperCase(#strings.substring(usuario.nome, 0, 1))}">U</div>
+                <div class="user-details">
+                    <h3 th:text="${usuario.nome}">Nome do Usuário</h3>
+                    <div class="user-username" th:text="${'@' + usuario.username}">@usuario</div>
+                    <div style="display:flex; gap:0.5rem; margin-top: 0.5rem;">
+                        <span th:switch="${usuario.perfil?.name()}">
+                            <span th:case="'ADMINISTRADOR'" class="badge badge-admin">Administrador</span>
+                            <span th:case="'FUNCIONARIO'" class="badge badge-green">Funcionário</span>
+                            <span th:case="*" class="badge badge-gray">Visitante</span>
+                        </span>
+                        <span th:if="${usuario.ativo}" class="badge badge-green">Ativo</span>
+                        <span th:unless="${usuario.ativo}" class="badge badge-inactive">Inativo</span>
+                    </div>
+                </div>
+            </div>
+            <div class="list-card-actions">
+                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="btn-icon-edit" title="Editar">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                    </svg>
+                </a>
+                <a th:href="@{/usuarios/desativar/{id}(id=${usuario.id})}" class="btn-icon-delete" title="Desativar">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

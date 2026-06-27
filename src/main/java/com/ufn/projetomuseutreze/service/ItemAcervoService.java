@@ -17,7 +17,7 @@ public class ItemAcervoService {
     }
 
     public List<ItemAcervo> listarTodos() {
-        return itemAcervoRepository.findAll();
+        return itemAcervoRepository.findByAtivo(true);
     }
 
     public ItemAcervo buscarPorId(Long id) {

@@ -3,7 +3,6 @@ package com.ufn.projetomuseutreze.service;
 import com.ufn.projetomuseutreze.model.Categoria;
 import com.ufn.projetomuseutreze.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +16,7 @@ public class CategoriaService {
     }
 
     public List<Categoria> listarTodas() {
-        return categoriaRepository.findAll();
+        return categoriaRepository.findByAtivo(true);
     }
 
     public Categoria buscarPorId(Long id) {

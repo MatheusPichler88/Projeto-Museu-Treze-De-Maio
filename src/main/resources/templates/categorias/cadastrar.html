@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Categoria — Museu Treze de Maio</title>
+    <link rel="stylesheet" th:href="@{/css/museu.css}" />
+</head>
+<body>
+
+<div class="layout-wrapper">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('categorias')}"></div>
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1 class="page-title" th:text="${categoria.id != null} ? 'Editar Categoria' : 'Cadastro de Categoria'">Cadastro de Categoria</h1>
+            <p class="page-subtitle">Gerencie as categorias do museu</p>
+        </div>
+
+        <div class="form-card">
+            <form th:action="@{/categorias/salvar}" th:object="${categoria}" method="post">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label class="form-label">Nome da Categoria <span class="required">*</span></label>
+                    <input type="text" class="form-control" th:field="*{nome}" placeholder="Digite o nome da categoria" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-control" rows="5" th:field="*{descricao}" placeholder="Digite uma descrição da categoria"></textarea>
+                </div>
+
+                <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+                    <input type="checkbox" id="ativo" th:field="*{ativo}" style="width:1.1rem; height:1.1rem;">
+                    <label class="form-label" for="ativo" style="margin-bottom:0;">Categoria ativa</label>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; gap:1rem; margin-top: 1.5rem;">
+                    <a th:href="@{/categorias}" class="btn btn-icon-edit" style="display:inline-flex; padding: 0.75rem 1.5rem;">Voltar</a>
+                    <button type="submit" class="btn btn-primary" style="width:auto;">
+                        <span th:text="${categoria.id != null} ? 'Salvar Alterações' : 'Salvar Categoria'">Salvar Categoria</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

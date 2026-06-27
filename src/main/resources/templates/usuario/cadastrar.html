@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário — Museu Treze de Maio</title>
+    <link rel="stylesheet" th:href="@{/css/museu.css}" />
+</head>
+<body>
+
+<div class="layout-wrapper">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('usuarios')}"></div>
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1 class="page-title" th:text="${usuario.id != null} ? 'Editar Usuário' : 'Cadastro de Usuário'">Cadastro de Usuário</h1>
+            <p class="page-subtitle">Adicione ou edite um usuário do sistema</p>
+        </div>
+
+        <div class="form-card">
+            <form th:action="@{/usuarios/salvar}" th:object="${usuario}" method="post">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label class="form-label">Nome Completo <span class="required">*</span></label>
+                    <input type="text" class="form-control" th:field="*{nome}" placeholder="Nome completo do usuário" required>
+                </div>
+
+                <div class="form-row form-row-2">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Usuário <span class="required">*</span></label>
+                        <input type="text" class="form-control" th:field="*{username}" placeholder="Nome de login" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Perfil <span class="required">*</span></label>
+                        <select class="form-control" th:field="*{perfil}">
+                            <option value="ADMINISTRADOR">Administrador</option>
+                            <option value="FUNCIONARIO">Funcionário</option>
+                            <option value="VISITANTE">Visitante</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        Senha
+                        <span th:if="${usuario.id == null}" class="required">*</span>
+                        <small th:if="${usuario.id != null}" style="color: var(--text-dimmer); font-weight: 400;">(deixe em branco para manter a atual)</small>
+                    </label>
+                    <input type="password" class="form-control" th:field="*{senha}"
+                           placeholder="Digite a senha"
+                           th:required="${usuario.id == null}">
+                </div>
+
+                <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+                    <input type="checkbox" id="ativo" th:field="*{ativo}" style="width:1.1rem; height:1.1rem;">
+                    <label class="form-label" for="ativo" style="margin-bottom:0;">Usuário ativo</label>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; gap:1rem; margin-top: 1.5rem;">
+                    <a th:href="@{/usuarios}" class="btn btn-icon-edit" style="display:inline-flex; padding: 0.75rem 1.5rem;">Voltar</a>
+                    <button type="submit" class="btn btn-primary" style="width:auto;">
+                        <span th:text="${usuario.id != null} ? 'Salvar Alterações' : 'Cadastrar Usuário'">Cadastrar Usuário</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

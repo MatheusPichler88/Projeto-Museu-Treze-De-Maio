@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Item — Museu Treze de Maio</title>
+    <link rel="stylesheet" th:href="@{/css/museu.css}" />
+</head>
+<body>
+
+<div class="layout-wrapper">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('acervo')}"></div>
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1 class="page-title" th:text="${item.id != null} ? 'Editar Item do Acervo' : 'Cadastro de Item do Acervo'">Cadastro de Item do Acervo</h1>
+            <p class="page-subtitle">Preencha os dados do item para o acervo do museu</p>
+        </div>
+
+        <div class="form-card">
+            <form th:action="@{/itens/salvar}" th:object="${item}" method="post">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-row form-row-2">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Código do Patrimônio <span class="required">*</span></label>
+                        <input type="text" class="form-control" th:field="*{codigoPatrimonio}" placeholder="Ex: PAT-001" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Título <span class="required">*</span></label>
+                        <input type="text" class="form-control" th:field="*{titulo}" placeholder="Título do Item" required>
+                    </div>
+                </div>
+
+                <div class="form-row form-row-2">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Autor / Criador</label>
+                        <input type="text" class="form-control" th:field="*{autorCriador}" placeholder="Nome do Autor">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Editora / Origem</label>
+                        <input type="text" class="form-control" th:field="*{editoraOrigem}" placeholder="Origem do Item">
+                    </div>
+                </div>
+
+                <div class="form-row form-row-3">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Ano de Registro</label>
+                        <input type="number" class="form-control" th:field="*{anoRegistro}" placeholder="2025">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Quantidade</label>
+                        <input type="number" class="form-control" th:field="*{quantidade}" min="1">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Categoria <span class="required">*</span></label>
+                        <select class="form-control" th:field="*{categoria.id}" required>
+                            <option value="">Selecione...</option>
+                            <option th:each="cat : ${categorias}"
+                                    th:value="${cat.id}"
+                                    th:text="${cat.nome}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row form-row-2">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Estado de Conservação</label>
+                        <select class="form-control" th:field="*{estadoConservacao}">
+                            <option value="EXCELENTE">Excelente</option>
+                            <option value="BOM">Bom</option>
+                            <option value="REGULAR">Regular</option>
+                            <option value="RUIM">Ruim</option>
+                            <option value="EM_RESTAURO">Em Restauro</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Localização Física</label>
+                        <input type="text" class="form-control" th:field="*{localizacaoFisica}" placeholder="Sala / Estante / Prateleira">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-control" rows="4" th:field="*{descricao}" placeholder="Descreva o item do acervo..."></textarea>
+                </div>
+
+                <div class="form-group" style="display:flex; align-items:center; gap:0.5rem;">
+                    <input type="checkbox" id="ativo" th:field="*{ativo}" style="width:1.1rem; height:1.1rem;">
+                    <label class="form-label" for="ativo" style="margin-bottom:0;">Item ativo</label>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; gap:1rem; margin-top: 1.5rem;">
+                    <a th:href="@{/itens}" class="btn btn-icon-edit" style="display:inline-flex; padding: 0.75rem 1.5rem;">Voltar</a>
+                    <button type="submit" class="btn btn-primary" style="width:auto;">
+                        <span th:text="${item.id != null} ? 'Salvar Alterações' : 'Salvar Item'">Salvar Item</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

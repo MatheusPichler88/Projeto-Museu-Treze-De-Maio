@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acesso Negado — Museu Treze de Maio</title>
+    <link rel="stylesheet" th:href="@{/css/museu.css}" />
+</head>
+<body>
+
+<div class="layout-wrapper">
+
+    <div th:replace="~{fragments/sidebar :: sidebar('acesso-negado')}"></div>
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1 class="page-title">Acesso Negado</h1>
+            <p class="page-subtitle">Você não tem permissão para acessar esta página.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                </svg>
+                <p>
+                    Seu perfil de usuário não possui permissão suficiente para visualizar este conteúdo.<br>
+                    Se você acredita que isso é um erro, entre em contato com um administrador do sistema.
+                </p>
+                <div style="margin-top: 1.5rem;">
+                    <a th:href="@{/}" class="btn btn-icon-edit" style="display:inline-flex; padding: 0.75rem 1.5rem;">
+                        Voltar à Página Inicial
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

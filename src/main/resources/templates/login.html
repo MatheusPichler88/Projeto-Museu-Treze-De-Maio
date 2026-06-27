@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Museu Treze de Maio</title>
+    <link rel="stylesheet" th:href="@{/css/museu.css}" />
+</head>
+<body>
+
+<div class="login-page">
+    <div class="login-container">
+
+        <div class="login-header">
+            <img th:src="@{/css/img/logo.png}" alt="Logo Museu Treze de Maio" />
+            <h1>Museu Treze de Maio</h1>
+            <p>Sistema de Gestão do Acervo</p>
+        </div>
+
+        <div class="login-card">
+
+            <div class="login-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+            </div>
+
+            <h2>Acesso ao Sistema</h2>
+            <p class="login-tagline">Entre com seu usuário e senha para continuar</p>
+
+            <div class="alert alert-error" th:if="${param.error}">
+                Usuário ou senha inválidos. Tente novamente.
+            </div>
+            <div class="alert alert-success" th:if="${param.logout}">
+                Sessão encerrada com sucesso.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+
+                <div class="form-group">
+                    <label class="form-label" for="username">Usuário</label>
+                    <div class="form-control-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                        <input class="form-control" type="text" id="username" name="username"
+                               placeholder="Digite seu usuário" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Senha</label>
+                    <div class="form-control-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                        </svg>
+                        <input class="form-control" type="password" id="password" name="password"
+                               placeholder="Digite sua senha" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+
+            <div class="login-footer-note">
+                Acesso restrito a administradores e funcionários do museu.<br>
+                Visitantes podem <a th:href="@{/}" style="color: var(--green-primary);">explorar o acervo</a> sem login.
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

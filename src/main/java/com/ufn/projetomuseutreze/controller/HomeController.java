@@ -1,62 +1,54 @@
 package com.ufn.projetomuseutreze.controller;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ufn.projetomuseutreze.service.CategoriaService;
+import com.ufn.projetomuseutreze.service.ItemAcervoService;
+import com.ufn.projetomuseutreze.service.UsuarioService;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.ufn.projetomuseutreze.model.ItemAcervo;
-import com.ufn.projetomuseutreze.repository.ItemAcervoRepository;
 
 @Controller
 public class HomeController {
 
-    @Autowired
-    private ItemAcervoRepository itemAcervoRepository;
+    private final ItemAcervoService itemAcervoService;
+    private final CategoriaService categoriaService;
+    private final UsuarioService usuarioService;
 
-
-    // Rota para a Página Inicial (index.html) — Agora com suporte aos dados do painel!
-    @GetMapping("/")
-    public String index(Model model) {
-
-        // 1. Simulação de Login (Substitua pela sua lógica do Spring Security depois!)
-        // Por enquanto, fingimos que não há usuário logado para testar a visão de visitante.
-        boolean loggedIn = false;
-        model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute("currentUser", null);
-
-        // 2. Busca de dados reais para as estatísticas (Count do banco)
-        long totalAcervo = itemAcervoRepository.count();
-        model.addAttribute("totalAcervo", totalAcervo);
-
-        // Se tiver os repositórios, use .count(). Caso contrário, deixamos um valor fixo de teste:
-        long totalCategorias = 5; // categoriaRepository.count();
-        model.addAttribute("totalCategorias", totalCategorias);
-
-        long totalUsuarios = 3; // usuarioRepository.count();
-        model.addAttribute("totalUsuarios", totalUsuarios);
-
-        // 3. Notícias (Se você não tiver uma tabela de notícias ainda, enviamos null ou vazio
-        // para que o HTML use o bloco estático padrão que você programou perfeitamente)
-        model.addAttribute("noticias", null);
-
-        return "index"; // Procura por src/main/resources/templates/index.html
+    public HomeController(ItemAcervoService itemAcervoService, CategoriaService categoriaService, UsuarioService usuarioService) {
+        this.itemAcervoService = itemAcervoService;
+        this.categoriaService = categoriaService;
+        this.usuarioService = usuarioService;
     }
 
-    // Rota para a Página de Login / Cadastro (login.html)
+    @GetMapping("/")
+    public String index(Model model, Authentication auth) {
+        model.addAttribute("totalAcervo", itemAcervoService.listarTodos().size());
+        model.addAttribute("totalCategorias", categoriaService.listarTodas().size());
+
+        // O Spring Security cria um usuário anônimo para quem não fez login
+        boolean loggedIn = auth != null
+                && auth.isAuthenticated()
+                && !(auth instanceof AnonymousAuthenticationToken);
+        model.addAttribute("loggedIn", loggedIn);
+
+        if (loggedIn) {
+            // Busca o usuário logado pelo username do Spring Security
+            usuarioService.buscarPorUsername(auth.getName()).ifPresent(u -> {
+                model.addAttribute("currentUser", u);
+                model.addAttribute("totalUsuarios", usuarioService.listarTodos().size());
+            });
+        }
+        return "index";
+    }
+
     @GetMapping("/login")
     public String login() {
-        return "login"; // Procura por src/main/resources/templates/login.html
+        return "login";
     }
 
-    // Rota para a Listagem do Acervo (acervo.html)
-    @GetMapping("/acervo")
-    public String acervo(Model model) {
-        // Busca todos os itens cadastrados no banco de dados
-        List<ItemAcervo> listaItens = itemAcervoRepository.findAll();
-
-        // Envia a lista para o arquivo HTML reconhecer na tag th:each="item : ${itens}"
-        model.addAttribute("itens", listaItens);
-
-        return "acervo"; // Procura por src/main/resources/templates/acervo.html
+    @GetMapping("/acesso-negado")
+    public String acessoNegado() {
+        return "acesso-negado";
     }
 }

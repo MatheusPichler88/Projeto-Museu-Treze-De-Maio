@@ -23,7 +23,7 @@ public class ItemAcervoController {
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("itens", itemAcervoService.listarTodos());
-        return "acervo/lista";
+        return "acervo/listar";
     }
 
     // Tela do formulário de cadastro
@@ -31,7 +31,7 @@ public class ItemAcervoController {
     public String novo(Model model) {
         model.addAttribute("item", new ItemAcervo());
         model.addAttribute("categorias", categoriaService.listarTodas());
-        return "acervo/formulario";
+        return "acervo/cadastrar";
     }
 
     // Tela de salvar item
@@ -46,7 +46,7 @@ public class ItemAcervoController {
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("item", itemAcervoService.buscarPorId(id));
         model.addAttribute("categorias", categoriaService.listarTodas());
-        return "acervo/formulario";
+        return "acervo/cadastrar";
     }
 
     // Rota para desativar o item

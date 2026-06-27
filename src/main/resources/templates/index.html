@@ -1,38 +1,171 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Museu Digital - Início</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página Inicial — Museu Treze de Maio</title>
+    <link rel="stylesheet" th:href="@{/css/museu.css}" />
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="logo-container">
-            <img th:src="@{/images/logo.png}" alt="Logo do Museu" class="logo">
-        </div>
-        <nav class="nav-menu">
-            <a th:href="@{/}" class="nav-link active">Início</a>
-            <a th:href="@{/acervo}" class="nav-link">Acervo</a>
-            <a th:href="@{/login}" class="btn-login-nav">Entrar</a>
-        </nav>
-    </header>
+<div class="layout-wrapper">
 
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1>Descubra a História no Nosso Acervo Digital</h1>
-            <p>Explore peças únicas, documentos históricos e relíquias preservadas.</p>
-            <div class="hero-buttons">
-                <a th:href="@{/acervo}" class="btn-primary">Ver Acervo</a>
-                <a th:href="@{/cadastro}" class="btn-secondary">Cadastre-se</a>
+    <div th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></div>
+
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1 class="page-title">Página Inicial</h1>
+            <p class="page-subtitle"
+               th:text="${loggedIn}
+           ? 'Bem-vindo, ' + ${currentUser.nome} + ' (' + (${currentUser.perfil == 'ADMINISTRADOR'} ? 'Administrador' : 'Funcionário') + ')'
+           : 'Bem-vindo, visitante! Explore nosso acervo.'">
+                Bem-vindo ao sistema.
+            </p>
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="stat-value" th:text="${totalAcervo != null} ? ${totalAcervo} : '—'">—</div>
+                    <div class="stat-label">Itens no Acervo</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="stat-value" th:text="${totalCategorias != null} ? ${totalCategorias} : '—'">—</div>
+                    <div class="stat-label">Categorias</div>
+                </div>
+            </div>
+
+            <div class="stat-card" th:if="${loggedIn and currentUser.perfil == 'ADMINISTRADOR'}">
+                <div class="stat-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="stat-value" th:text="${totalUsuarios != null} ? ${totalUsuarios} : '—'">—</div>
+                    <div class="stat-label">Usuários</div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="section-title">Sobre o Museu Treze de Maio</h2>
+
+        <div class="card" style="margin-bottom: 3rem;">
+            <div class="card-body">
+                <p class="card-text">
+                    A <span class="highlight">Sociedade Cultural Ferroviária 13 de Maio</span> foi fundada em 13 de maio de 1903
+                    por negros ferroviários, tendo em vista a discriminação racial existente na cidade e a proibição aos negros
+                    de frequentar as sociedades de brancos. Além disso, teve a intenção de celebrar a abolição da escravatura
+                    ocorrida vinte anos antes da sua fundação.
+                </p>
+                <p class="card-text">
+                    Em 2001 passou a integrar o Programa de Preservação e Revitalização da Mancha Ferroviária de Santa Maria,
+                    revitalizada enquanto um Museu Comunitário. O <span class="highlight">Museu Treze de Maio</span> surgiu como
+                    estratégia para salvaguardar o patrimônio da Sociedade, e o prédio foi tombado como patrimônio cultural
+                    municipal em dezembro de 2004.
+                </p>
+                <p class="card-text">
+                    O Museu Treze de Maio está na gênese do "Movimento Clubista", composto por aproximadamente 100 Clubes
+                    Sociais Negros de todo país, e organizou em novembro de 2006 o 1º Encontro Nacional de Clubes e Sociedades Negras.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-tile">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                        </svg>
+                        <div class="info-tile-value">121</div>
+                        <div class="info-tile-label">Anos de História</div>
+                    </div>
+                    <div class="info-tile">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                        </svg>
+                        <div class="info-tile-value">12mil+</div>
+                        <div class="info-tile-label">Itens no Acervo</div>
+                    </div>
+                    <div class="info-tile">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                        </svg>
+                        <div class="info-tile-value">100+</div>
+                        <div class="info-tile-label">Clubes no Movimento</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
 
-    <footer class="main-footer">
-        <p>&copy; 2026 Sistema de Gestão de Museu. Todos os direitos reservados.</p>
-    </footer>
+        <h2 class="section-title">Notícias Recentes</h2>
+
+        <div class="news-grid">
+
+            <th:block th:if="${noticias != null and !noticias.isEmpty()}">
+                <div class="news-card" th:each="noticia : ${noticias}">
+                    <div class="news-img-wrapper">
+                        <img class="news-img" th:src="${noticia.imagemUrl}" th:alt="${noticia.titulo}"
+                             onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80'" />
+                    </div>
+                    <div class="news-body">
+                        <div class="news-date">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                            </svg>
+                            <span th:text="${#temporals.format(noticia.dataPublicacao, 'dd/MM/yyyy')}">01/01/2026</span>
+                        </div>
+                        <h3 class="news-title" th:text="${noticia.titulo}">Título da Notícia</h3>
+                        <p class="news-desc" th:text="${noticia.descricao}">Descrição resumida da notícia relevante ao museu.</p>
+                    </div>
+                </div>
+            </th:block>
+
+            <th:block th:if="${noticias == null or noticias.isEmpty()}">
+                <div class="news-card">
+                    <div class="news-img-wrapper">
+                        <img class="news-img" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80" alt="Exposição" />
+                    </div>
+                    <div class="news-body">
+                        <div class="news-date">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                            </svg>
+                            <span>26/06/2026</span>
+                        </div>
+                        <h3 class="news-title">Nova Exposição Digital Instalada</h3>
+                        <p class="news-desc">O acervo digital agora conta com mapeamento interativo dos primeiros ferroviários da cidade.</p>
+                    </div>
+                </div>
+            </th:block>
+
+        </div>
+
+        <footer class="page-footer">
+            <p>&copy; 2026 Sistema de Gestão de Museu. Todos os direitos reservados.</p>
+        </footer>
+
+    </main>
+</div>
 
 </body>
 </html>

@@ -20,14 +20,14 @@ public class CategoriaController {
     @GetMapping
     public String listar(Model model){
         model.addAttribute("categorias", categoriaService.listarTodas());
-        return "categorias/lista";
+        return "categorias/listar";
     }
 
     // Tela de Cadastro de categorias
     @GetMapping("/novo")
     public String novaCategoria(Model model){
         model.addAttribute("categoria", new Categoria());
-        return "categorias/formulario";
+        return "categorias/cadastrar";
     }
 
     // Tela para salvar categoria
@@ -41,7 +41,7 @@ public class CategoriaController {
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model){
         model.addAttribute("categoria", categoriaService.buscarPorId(id));
-        return "categorias/formulario";
+        return "categorias/cadastrar";
     }
 
     // Rota para Desativar categoria

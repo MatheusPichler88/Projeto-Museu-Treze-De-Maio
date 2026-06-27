@@ -20,14 +20,14 @@ public class UsuarioController {
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("usuarios", usuarioService.listarTodos());
-        return "usuario/lista";
+        return "usuario/listar";
     }
 
     // Tela do formulário de cadastro
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuario/formulario";
+        return "usuario/cadastrar";
     }
 
     // Tela de salvar usuário
@@ -41,7 +41,7 @@ public class UsuarioController {
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("usuario", usuarioService.buscarPorId(id));
-        return "usuario/formulario";
+        return "usuario/cadastrar";
     }
 
     // Rota para desativar o usuário

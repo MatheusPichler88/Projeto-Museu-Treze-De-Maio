@@ -1,5 +1,6 @@
 package com.ufn.projetomuseutreze.service;
 
+import com.ufn.projetomuseutreze.model.Categoria;
 import com.ufn.projetomuseutreze.model.ItemAcervo;
 import com.ufn.projetomuseutreze.model.TipoItem;
 import com.ufn.projetomuseutreze.repository.ItemAcervoRepository;
@@ -52,4 +53,8 @@ public class ItemAcervoService {
         long proximoNumero = total + 1;
         return String.format("%s%03d", tipoItem.getPrefixo(), proximoNumero);
     }
+    public List<ItemAcervo> buscarPorNome(String nome) {
+        return itemAcervoRepository.findByAtivoAndTituloContainingIgnoreCase(true, nome);
+    }
+
 }

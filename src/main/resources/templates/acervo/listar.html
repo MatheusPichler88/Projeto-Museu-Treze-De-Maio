@@ -27,6 +27,12 @@
             </a>
         </div>
 
+        <form th:action="@{/itens}" method="get" style="display:flex; gap:0.5rem; margin-bottom:1.5rem;">
+            <input type="text" name="nome" th:value="${nomeFiltro}" placeholder="Buscar por título..." class="form-control"/>
+            <button type="submit" class="btn btn-primary" style="width:auto;">Buscar</button>
+            <a th:href="@{/itens}" class="btn" style="width:auto;">Limpar</a>
+        </form>
+
         <div th:if="${#lists.isEmpty(itens)}" class="card">
             <div class="card-body empty-state">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">

@@ -6,6 +6,7 @@ import com.ufn.projetomuseutreze.service.ItemAcervoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @Controller
 @RequestMapping("/itens")
@@ -19,10 +20,17 @@ public class ItemAcervoController {
         this.categoriaService = categoriaService;
     }
 
-    // Tela de listagem do acervo
+    // Tela de listar por nome
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("itens", itemAcervoService.listarTodos());
+    public String listarPorNome(@RequestParam(required = false) String nome, Model model) {
+        List<ItemAcervo> itens;
+        if (nome != null && !nome.isBlank()) {
+            itens = itemAcervoService.buscarPorNome(nome);
+        } else {
+            itens = itemAcervoService.listarTodos();
+        }
+        model.addAttribute("itens", itens);
+        model.addAttribute("nomeFiltro", nome);
         return "acervo/listar";
     }
 

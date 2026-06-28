@@ -13,4 +13,5 @@ public interface ItemAcervoRepository extends JpaRepository<ItemAcervo, Long> {
     Optional<ItemAcervo> findByCodigoPatrimonio(String codigoPatrimonio);
     List<ItemAcervo> findByAtivo(Boolean ativo);
     long countByTipoItem(TipoItem tipoItem);
+    List<ItemAcervo> findByAtivoAndTituloContainingIgnoreCase(Boolean ativo, String titulo);
 }

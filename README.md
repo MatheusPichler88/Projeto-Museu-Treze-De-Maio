@@ -133,7 +133,7 @@ docker compose up
 
 ## 🎬 Vídeo Demonstrativo
 
-> 🔗 *Link para o vídeo demonstrativo — a ser inserido aqui*
+> 🔗 *https://youtu.be/oOf_JJc3D1A*
 
 ---
 
